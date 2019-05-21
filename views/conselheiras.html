@@ -1,0 +1,109 @@
+<div>
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: left">{{tituloApp}}</h3>
+    </div>
+    <form class="form-row">
+        <div class="col">
+            <button ng-click="conselheira = {}" type="button" class="btn btn-info my-8 my-sm-2" data-toggle="modal" data-target="#conselheiraModal">
+                + Conselheira
+            </button>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <input ng-model="criterioDeBusca" class="form-control my-8 my-sm-2" type="text" placeholder="Busca rápida" aria-label="Busca">
+        </div>
+    </form>
+    <br>
+    <div class="alert-danger">{{mensagemDeErro}}</div>
+    <table class="table table-striped table-sm" ng-show="conselheiras.length">
+        <thead>
+            <th><a href="" ng-click="ordenarPor('nome')">Nome</a> </th>
+            <th><a href="" ng-click="ordenarPor('cpf')">CPF</a></th>
+            <th><a href="" ng-click="ordenarPor('dtPosse')">Data de posse</a></th>
+            <th><a href="" ng-click="ordenarPor('matricula')">Matrícula</a></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="elemento in conselheiras | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                <td title="{{elemento.nome}}">{{elemento.nome}}</td>
+                <td>{{elemento.cpf}}</td>
+                <td>{{elemento.dtPosse | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{elemento.matricula}}</td>
+                <td style="text-align: right;">
+                    <a href="" ng-click="editarConselheira(elemento)"><span style="padding: 3px;" title="Editar conselheira" class="fa fa-pencil" data-toggle="modal" data-target="#conselheiraModal"></span></a>
+                    <a href="" ng-click="removerConselheira(elemento)"><span style="padding: 3px;" title="Remover conselheira" class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h5 style="text-align: center" ng-show="!conselheiras.length">Não existem conselheiras a serem demonstradas. Clique em '+ Conselheira' para adicionar!</h5>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="conselheiraModal" tabindex="-1" role="dialog" aria-labelledby="conselheiraModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="conselheiraModalLabel">{{!conselheira.id ? 'Nova conselheira' : 'Editando conselheira'}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="conselheiraForm" name="conselheiraForm">
+                        <div class="form-group">
+                            <label for="nome">Nome: </label>
+                            <input ng-model="conselheira.nome" ng-required="true" ng-minlength="2" class="form-control" type="text" name="nome" id="nome" placeholder="Nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF: </label>
+                            <input ng-model="conselheira.cpf" ng-required="true" ng-minlength="11" ng-maxlength="11" class="form-control" type="text" name="cpf" id="cpf" placeholder="CPF">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="dtNascimento">Data de nascimento:</label>
+                            <input ng-model="conselheira.dtNascimento" ng-required="true" class="form-control" type="datetime-local" name="dtNascimento" id="dtNascimento" required>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="dtPosse">Data da posse:</label>
+                            <input ng-model="conselheira.dtPosse" ng-required="true" class="form-control" type="datetime-local" name="dtPosse" id="dtPosse" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="matricula">Matrícula: </label>
+                            <input ng-model="conselheira.matricula" ng-required="true" ng-minlength="2" class="form-control" type="text" name="matricula" id="matricula" placeholder="Matrícula">
+                        </div>
+                    </form>
+                    <div ng-messages="conselheiraForm.nome.$error" ng-show="conselheiraForm.nome.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe o nome!
+                        </div>
+                    </div>
+                    <div ng-messages="conselheiraForm.cpf.$error" ng-show="conselheiraForm.cpf.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe o CPF!
+                        </div>
+                    </div>
+                    <div ng-messages="conselheiraForm.dtNascimento.$error" ng-show="conselheiraForm.dtNascimento.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a data de nascimento!
+                        </div>
+                    </div>
+                    <div ng-messages="conselheiraForm.dtPosse.$error" ng-show="conselheiraForm.dtPosse.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a data da posse!
+                        </div>
+                    </div>
+                    <div ng-messages="conselheiraForm.matricula.$error" ng-show="conselheiraForm.matricula.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a matrícula!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="adicionarConselheira(conselheira)" ng-disabled="conselheiraForm.$invalid" data-dismiss="modal">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
