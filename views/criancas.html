@@ -1,0 +1,139 @@
+<div>
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: left">{{tituloApp}}</h3>
+    </div>
+    <form class="form-row">
+        <div class="col">
+            <button ng-click="crianca = {}" type="button" class="btn btn-info my-8 my-sm-2" data-toggle="modal" data-target="#criancaModal">
+                + Criança
+            </button>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <input ng-model="criterioDeBusca" class="form-control my-8 my-sm-2" type="text" placeholder="Busca rápida" aria-label="Busca">
+        </div>
+    </form>
+    <br>
+    <div class="alert-danger">{{mensagemDeErro}}</div>
+    <table class="table table-striped table-sm" ng-show="criancas.length">
+        <thead>
+            <th><a href="" ng-click="ordenarPor('nome')">Nome</a> </th>
+            <th><a href="" ng-click="ordenarPor('cpf')">CPF</a></th>
+            <th><a href="" ng-click="ordenarPor('dtPosse')">Data de nascimento</a></th>
+            <th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
+            <th><a href="" ng-click="ordenarPor('endereco')">Endereço</a></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="elemento in criancas | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                <td title="{{elemento.nome}}">{{elemento.nome}}</td>
+                <td>{{elemento.cpf}}</td>
+                <td>{{elemento.dtNascimento | date:'dd/MM/yyyy'}}</td>
+                <td>{{elemento.telefone}}</td>
+                <td>{{elemento.endereco}}</td>
+                <td style="text-align: right;">
+                    <a href="" ng-click="editarCrianca(elemento)"><span style="padding: 3px;" title="Editar criança" class="fa fa-pencil" data-toggle="modal" data-target="#criancaModal"></span></a>
+                    <a href="" ng-click="removerCrianca(elemento)"><span style="padding: 3px;" title="Remover criança" class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h5 style="text-align: center" ng-show="!criancas.length">Não existem crianças a serem demonstradas. Clique em '+ Criança' para adicionar!</h5>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="criancaModal" tabindex="-1" role="dialog" aria-labelledby="criancaModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="criancaModalLabel">{{!crianca.id ? 'Nova criança' : 'Editando criança'}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="criancaForm" name="criancaForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nome">Nome: </label>
+                                <input ng-model="crianca.nome" ng-required="true" ng-minlength="2" class="form-control" type="text" name="nome" id="nome" placeholder="Nome">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="cpf">CPF: </label>
+                                <input ng-model="crianca.cpf" ng-required="true" ng-minlength="11" ng-maxlength="11" class="form-control" type="text" name="cpf" id="cpf" placeholder="CPF">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label for="endereco">Endereço: </label>
+                                <input ng-model="crianca.endereco" ng-required="true" ng-minlength="2" ng-maxlength="100" class="form-control" type="text" name="endereco" id="endereco" placeholder="Endereço">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="telefone">Telefone: </label>
+                                <input ng-model="crianca.telefone" ng-required="true" ng-minlength="2" class="form-control" type="text" name="telefone" id="telefone" placeholder="Telefone">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="dtNascimento">Data de nascimento:</label>
+                                <input ng-model="crianca.dtNascimento" type="date" name="dtNascimento" id="dtNascimento" ng-required="true" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="sexo">Sexo:</label>
+                                <select id="sexo" class="custom-select" ng-model="crianca.sexo" ng-required="true">
+                                    <option value="">Selecione a sexo</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Feminino</option>
+                                    <option value="O">Outro</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="deficiente">Deficiente:</label>
+                                <select id="deficiente" class="custom-select" ng-model="crianca.deficiente" ng-required="true">
+                                    <option value="">Selecione</option>
+                                    <option value="S">Sim</option>
+                                    <option value="N">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div ng-messages="criancaForm.nome.$error" ng-show="criancaForm.nome.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe o nome!
+                        </div>
+                    </div>
+                    <div ng-messages="criancaForm.cpf.$error" ng-show="criancaForm.cpf.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe o CPF!
+                        </div>
+                    </div>
+                    <div ng-messages="criancaForm.dtNascimento.$error" ng-show="criancaForm.dtNascimento.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a data de nascimento!
+                        </div>
+                    </div>
+                    <div ng-messages="criancaForm.sexo.$error" ng-show="criancaForm.sexo.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe o sexo da criança!
+                        </div>
+                    </div>
+                    <div ng-messages="criancaForm.deficiente.$error" ng-show="criancaForm.deficiente.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe se a criança é deficiente!
+                        </div>
+                    </div>
+                    <div ng-messages="criancaForm.telefone.$error" ng-show="criancaForm.telefone.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a telefone!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="adicionarCrianca(crianca)" ng-disabled="criancaForm.$invalid" data-dismiss="modal">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

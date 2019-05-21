@@ -52,6 +52,13 @@
         };
         vm.editarCrianca = function(criancaParaEditar) {
             vm.crianca = angular.copy(criancaParaEditar);
+            vm.crianca.dtNascimento = convertData(criancaParaEditar.dtNascimento);
+        };
+        var convertData = function(dataLong) {
+            if (!dataLong) {
+                return;
+            }
+            return new Date(dataLong);
         };
         vm.ordenarPor = function(nomeDoCampo) {
             vm.campoParaOrdenacao = nomeDoCampo;
