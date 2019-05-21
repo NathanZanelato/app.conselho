@@ -27,7 +27,7 @@
             <tr ng-repeat="elemento in conselheiras | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
                 <td title="{{elemento.nome}}">{{elemento.nome}}</td>
                 <td>{{elemento.cpf}}</td>
-                <td>{{elemento.dtPosse | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{elemento.dtPosse | date:'dd/MM/yyyy'}}</td>
                 <td>{{elemento.matricula}}</td>
                 <td style="text-align: right;">
                     <a href="" ng-click="editarConselheira(elemento)"><span style="padding: 3px;" title="Editar conselheira" class="fa fa-pencil" data-toggle="modal" data-target="#conselheiraModal"></span></a>
@@ -52,25 +52,29 @@
                 </div>
                 <div class="modal-body">
                     <form id="conselheiraForm" name="conselheiraForm">
-                        <div class="form-group">
-                            <label for="nome">Nome: </label>
-                            <input ng-model="conselheira.nome" ng-required="true" ng-minlength="2" class="form-control" type="text" name="nome" id="nome" placeholder="Nome">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nome">Nome: </label>
+                                <input ng-model="conselheira.nome" ng-required="true" ng-minlength="2" class="form-control" type="text" name="nome" id="nome" placeholder="Nome">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="cpf">CPF: </label>
+                                <input ng-model="conselheira.cpf" ng-required="true" ng-minlength="11" ng-maxlength="11" class="form-control" type="text" name="cpf" id="cpf" placeholder="CPF">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="cpf">CPF: </label>
-                            <input ng-model="conselheira.cpf" ng-required="true" ng-minlength="11" ng-maxlength="11" class="form-control" type="text" name="cpf" id="cpf" placeholder="CPF">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="dtNascimento">Data de nascimento:</label>
-                            <input ng-model="conselheira.dtNascimento" ng-required="true" class="form-control" type="datetime-local" name="dtNascimento" id="dtNascimento" required>
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="dtPosse">Data da posse:</label>
-                            <input ng-model="conselheira.dtPosse" ng-required="true" class="form-control" type="datetime-local" name="dtPosse" id="dtPosse" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="matricula">Matrícula: </label>
-                            <input ng-model="conselheira.matricula" ng-required="true" ng-minlength="2" class="form-control" type="text" name="matricula" id="matricula" placeholder="Matrícula">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="dtNascimento">Data de nascimento:</label>
+                                <input ng-model="conselheira.dtNascimento" type="date" name="dtNascimento" id="dtNascimento" ng-required="true" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="dtPosse">Data da posse:</label>
+                                <input ng-model="conselheira.dtPosse" type="date" name="dtPosse" id="dtPosse" ng-required="true" class="form-control">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="matricula">Matrícula: </label>
+                                <input ng-model="conselheira.matricula" ng-required="true" ng-minlength="2" class="form-control" type="text" name="matricula" id="matricula" placeholder="Matrícula">
+                            </div>
                         </div>
                     </form>
                     <div ng-messages="conselheiraForm.nome.$error" ng-show="conselheiraForm.nome.$dirty">

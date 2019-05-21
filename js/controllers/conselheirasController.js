@@ -52,6 +52,14 @@
         };
         vm.editarConselheira = function(conselheiraParaEditar) {
             vm.conselheira = angular.copy(conselheiraParaEditar);
+            vm.conselheira.dtNascimento = convertData(conselheiraParaEditar.dtNascimento);
+            vm.conselheira.dtPosse = convertData(conselheiraParaEditar.dtPosse);
+        };
+        var convertData = function(dataLong) {
+            if (!dataLong) {
+                return;
+            }
+            return new Date(dataLong);
         };
         vm.ordenarPor = function(nomeDoCampo) {
             vm.campoParaOrdenacao = nomeDoCampo;
