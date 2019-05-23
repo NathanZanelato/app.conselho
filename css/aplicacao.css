@@ -18,6 +18,13 @@
     margin-top: 9px;
 }
 
+.img-login {
+    max-width:500px;
+    max-height:480px;
+    width: auto;
+    height: auto;
+}
+
 .top-view {
     margin-top: 100px;
 }
