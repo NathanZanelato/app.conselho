@@ -1,3 +1,11 @@
-angular.module("app").controller("homeController", function($scope) {
-    $scope.texto = "Pagina principal";
-});
+(function() {
+
+    'use strict';
+
+    angular.module("app").controller("homeController", homeController);
+
+    function homeController($scope) {
+        $scope.texto = "Pagina principal";
+    }
+
+})();

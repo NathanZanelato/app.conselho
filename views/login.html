@@ -1,0 +1,30 @@
+<div class="top-view">
+    <div class="row">
+        <img class="col-md-6" src="./img/dia-adoravel-para-criancas-com-design-plano.jpg" alt="dia-feliz">
+        <span class="border"></span>
+        <div class="col-md-4" style="margin-top: 200px;">
+            <h2 style="margin-bottom: 50px;">Entrar</h2>
+            <form name="form" ng-submit="form.$valid && vm.login()" novalidate>
+                <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.username.$invalid }">
+                    <label for="username">Usuário:</label>
+                    <input type="text" name="username" class="form-control" ng-model="vm.username" required />
+                    <div ng-messages="form.$submitted && form.username.$error" class="validacao-msg">
+                        <div ng-message="required">Campo 'Usuário' é obrigatório</div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.password.$invalid }">
+                    <label for="password">Senha:</label>
+                    <input type="password" name="password" class="form-control" ng-model="vm.password" required />
+                    <div ng-messages="form.$submitted && form.password.$error" class="validacao-msg">
+                        <div ng-message="required">Campo 'Senha' é obrigatório</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button ng-disabled="vm.loading" class="btn btn-primary">Login</button>
+                    <img ng-if="vm.loading" src="https://goo.gl/xob0vd" />
+                </div>
+                <div ng-if="vm.mensagemDeErro" class="alert alert-danger">{{vm.mensagemDeErro}}</div>
+            </form>
+        </div>
+    </div>
+</div>

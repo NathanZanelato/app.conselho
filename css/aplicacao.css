@@ -13,6 +13,15 @@
 .alert {
     margin-top: 7px;
 }
+
 .custom-select {
     margin-top: 9px;
+}
+
+.top-view {
+    margin-top: 100px;
+}
+
+.validacao-msg {
+    font-size: 12px;
 }
