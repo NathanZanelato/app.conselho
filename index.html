@@ -56,7 +56,7 @@
         <ng-view></ng-view>
     </div>
     
-    <footer class="footer">
+    <footer class="footer" ng-show="!!currentUser()">
         <div class="container">
             <div ng-include="'views/rodape.html'"></div>
         </div>
