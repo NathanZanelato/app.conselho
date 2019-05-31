@@ -1,0 +1,164 @@
+<div class="top-view">
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: left">{{tituloApp}}</h3>
+    </div>
+    <form class="form-row">
+        <div class="col">
+            <button ng-click="ocorrencia = {'dhRegistro' : now}" type="button" class="btn btn-info my-8 my-sm-2" data-toggle="modal" data-target="#ocorrenciaModal">
+                + Ocorrência
+            </button>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <input ng-model="criterioDeBusca" class="form-control my-8 my-sm-2" type="text" placeholder="Busca rápida" aria-label="Busca">
+        </div>
+    </form>
+    <br>
+    <div class="alert-danger">{{mensagemDeErro}}</div>
+    <table class="table table-striped table-sm" ng-show="ocorrencias.length">
+        <thead>
+            <th><a href="" ng-click="ordenarPor('id')">N° Registro</a></th>
+            <th><a href="" ng-click="ordenarPor('conselheira.nome')">Conselheira</a> </th>
+            <th><a href="" ng-click="ordenarPor('crianca.nome')">Criança</a></th>
+            <th><a href="" ng-click="ordenarPor('responsavel')">Responsável</a></th>
+            <th><a href="" ng-click="ordenarPor('dhOcorrencia')">Data/hora</a></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="elemento in ocorrencias | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                <td title="{{elemento.id}}">{{elemento.id}}</td>
+                <td title="{{elemento.conselheira.nome}}">{{elemento.conselheira.nome}}</td>
+                <td>{{elemento.crianca.nome}}</td>
+                <td>{{elemento.responsavel}}</td>
+                <td>{{elemento.dhOcorrencia | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td style="text-align: right;">
+                    <a href="" ng-click="editarOcorrencia(elemento)"><span style="padding: 3px;" title="Editar ocorrência" class="fa fa-pencil" data-toggle="modal" data-target="#ocorrenciaModal"></span></a>
+                    <a href="" ng-click="removerOcorrencia(elemento)"><span style="padding: 3px;" title="Remover ocorrência" class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h5 style="text-align: center" ng-show="!ocorrencias.length">Não existem ocorrências a serem demonstradas. Clique em '+ Ocorrência' para adicionar!</h5>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="ocorrenciaModal" tabindex="-1" role="dialog" aria-labelledby="ocorrenciaModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ocorrenciaModalLabel">{{!ocorrencia.id ? 'Nova ocorrência' : 'Editando ocorrência'}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- {{ocorrencia}} -->
+                    <form id="ocorrenciaForm" name="ocorrenciaForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="id">N° registro: </label>
+                                <input ng-show="ocorrencia.id" ng-model="ocorrencia.id" ng-disabled="true" class="form-control" type="text" name="id" id="id" placeholder="N° Registro">
+                                <input ng-show="!ocorrencia.id" ng-model="proximoId" ng-disabled="true" class="form-control" type="text" name="id" id="id" placeholder="N° Registro">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="dhRegistro">Data/Hora registro:</label>
+                                <input ng-model="ocorrencia.dhRegistro" type="text" name="dhRegistro" id="dhRegistro" ng-disabled="true" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="conselheiras">Conselheira:</label>
+                                <select id="conselheiras" class="custom-select" ng-model="ocorrencia.conselheira" ng-required="true">
+                                    <option value ="">Selecione a conselheira</option>
+                                    <option ng-repeat="conselheira in conselheiras | orderBy:'nome'" ng-value="conselheira" ng-selected="ocorrencia.conselheira.id === conselheira.id">
+                                        {{conselheira.nome}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="criancas">Criança:</label>
+                                <select id="criancas" class="custom-select" ng-model="ocorrencia.crianca" ng-required="true">
+                                    <option value ="">Selecione a crianca</option>
+                                    <option ng-repeat="crianca in criancas | orderBy:'nome'" ng-value="crianca" ng-selected="ocorrencia.crianca.id === crianca.id">
+                                        {{crianca.nome}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="dhOcorrencia">Data/hora ocorrência:</label>
+                                <input ng-model="ocorrencia.dhOcorrencia" type="datetime-local" name="dhOcorrencia" id="dhOcorrencia" ng-required="true" class="form-control">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="responsavel">Nome do Responsável: </label>
+                                <input ng-model="ocorrencia.responsavel" ng-required="true" ng-minlength="3" ng-maxlength="100" class="form-control" type="text" name="responsavel" id="responsavel" placeholder="Responsável">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="nome">Descrição da ocorrência:</label>
+                                <textarea ng-model="ocorrencia.descricao" class="form-control" ng-minlength="3" ng-maxlength="5000" type="text" name="descricao" id="descricao" cols="80" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="procedenciasDenuncias">Procedência da denúncia:</label>
+                                <select id="procedenciasDenuncias" class="custom-select" ng-model="ocorrencia.procedenciaDenuncia" ng-required="true">
+                                    <option value ="">Selecione a procedência</option>
+                                    <option ng-repeat="procedencia in procedenciasDenuncias | orderBy:'value'" ng-value="procedencia.value" ng-selected="ocorrencia.procedenciaDenuncia.value === procedencia.value">
+                                        {{procedencia.descricao}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="agentesVioladores">Agente violador:</label>
+                                <select id="agentesVioladores" class="custom-select" ng-model="ocorrencia.agenteViolador" ng-required="true">
+                                    <option value ="">Selecione o agente violador</option>
+                                    <option ng-repeat="agente in agentesVioladores | orderBy:'value'" ng-value="agente.value" ng-selected="ocorrencia.agenteViolador.value === agente.value">
+                                        {{agente.descricao}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div ng-messages="ocorrenciaForm.conselheira.$error" ng-show="ocorrenciaForm.conselheira.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a conselheira!
+                        </div>
+                    </div>
+                    <div ng-messages="ocorrenciaForm.crianca.$error" ng-show="ocorrenciaForm.crianca.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a criança!
+                        </div>
+                    </div>
+                    <div ng-messages="ocorrenciaForm.dhOcorrencia.$error" ng-show="ocorrenciaForm.dhOcorrencia.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a data e hora da ocorrência!
+                        </div>
+                    </div>
+                    <div ng-messages="ocorrenciaForm.responsavel.$error" ng-show="ocorrenciaForm.responsavel.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe o responsável!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="adicionarOcorrencia(ocorrencia)" ng-disabled="ocorrenciaForm.$invalid" data-dismiss="modal">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
