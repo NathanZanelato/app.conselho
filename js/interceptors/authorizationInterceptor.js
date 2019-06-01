@@ -4,7 +4,7 @@
 
     angular.module("app").factory("authorizationInterceptor", authorizationInterceptor);
 
-    atendimentosController.$inject = ['$q', '$location'];
+    authorizationInterceptor.$inject = ['$q', '$location'];
 
     function authorizationInterceptor($q, $location) {
 

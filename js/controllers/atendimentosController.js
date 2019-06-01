@@ -72,6 +72,30 @@
             });
         };
 
+        vm.procedenciasDenuncias = [];
+        var carregarProcedenciasDenuncias = function() {
+            ocorrenciasAPI.getProcedenciasDenuncias()
+            .then(function(response) {
+                vm.procedenciasDenuncias = response.data;
+            })
+            .catch(function(response) {
+                var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
+                vm.mensagemDeErro = !!response.data.error ? response.data.error : mensagem;
+            });
+        };
+
+        vm.agentesVioladores = [];
+        var carregarAgentesVioladores = function() {
+            ocorrenciasAPI.getAgentesVioladores()
+            .then(function(response) {
+                vm.agentesVioladores = response.data;
+            })
+            .catch(function(response) {
+                var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
+                vm.mensagemDeErro = !!response.data.error ? response.data.error : mensagem;
+            });
+        };
+
         vm.adicionarAtendimento = function(atendimento) {
             var novoAtendimento = angular.copy(atendimento);
             var dhRegistro = new Date();
@@ -106,6 +130,11 @@
             vm.atendimento = angular.copy(atendimentoParaEditar);
             vm.dhRegistro = $filter('date')(atendimentoParaEditar.dhRegistro, "dd/MM/yyyy HH:mm");
         };
+        vm.detalhar = function(ocorrenciaParaDetalhar) {
+            vm.ocorrencia = angular.copy(ocorrenciaParaDetalhar);
+            vm.dhRegistro = $filter('date')(ocorrenciaParaDetalhar.dhRegistro, "dd/MM/yyyy HH:mm");
+            vm.ocorrencia.dhOcorrencia = convertData(ocorrenciaParaDetalhar.dhOcorrencia);
+        };
         var convertData = function(dataLong) {
             if (!dataLong) {
                 return;
@@ -123,6 +152,7 @@
         carregarConselheiras();
         carregarMedidasAplicadas();
         carregarDireitosViolados();
-
+        carregarAgentesVioladores();
+        carregarProcedenciasDenuncias();
     };
 })();
