@@ -2,33 +2,21 @@
     
     'use strict';
 
-    angular.module("app").controller("ocorrenciasController", ocorrenciasController);
+    angular.module("app").controller("atendimentosController", atendimentosController);
 
-    ocorrenciasController.$inject = ['$scope', '$filter', 'ocorrenciasAPI', 'conselheirasAPI', 'criancasAPI'];
+    atendimentosController.$inject = ['$scope', '$filter', 'atendimentosAPI', 'ocorrenciasAPI', 'conselheirasAPI'];
 
-    function ocorrenciasController($scope, $filter, ocorrenciasAPI, conselheirasAPI, criancasAPI) {
+    function atendimentosController($scope, $filter, atendimentosAPI, ocorrenciasAPI, conselheirasAPI) {
     
         var vm = $scope;
 
-        vm.tituloApp = "Listagem de ocorrências";
-        vm.ocorrencias = [];
-        var maxId = 0;
-        var carregarOcorrencias = function() {
-            ocorrenciasAPI.getOcorrencias()
-            .then(function(response) {
-                vm.ocorrencias = response.data;
+        vm.tituloApp = "Listagem de atendimentos";
+        vm.atendimentos = [];
 
-                if (vm.ocorrencias.length === 0) {
-                    maxId = 0;
-                } else if (vm.ocorrencias.length === 1) {
-                    maxId = vm.ocorrencias[0].id;
-                } else {
-                    var ocorrenciaMaiorId = vm.ocorrencias.reduce(function(a, b) {
-                        return Math.max(a.id, b.id);
-                    });
-                    maxId = ocorrenciaMaiorId.id;
-                }
-                vm.proximoId = (maxId || 0)  + 1;
+        var carregarAtendimentos = function() {
+            atendimentosAPI.getAtendimentos()
+            .then(function(response) {
+                vm.atendimentos = response.data;
             })
             .catch(function(response) {
                 var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
@@ -48,11 +36,11 @@
             });
         };
 
-        vm.criancas = [];
-        var carregarCriancas = function() {
-            criancasAPI.getCriancas()
+        vm.ocorrencias = [];
+        var carregarOcorrencias = function() {
+            ocorrenciasAPI.getOcorrencias()
             .then(function(response) {
-                vm.criancas = response.data;
+                vm.ocorrencias = response.data;
             })
             .catch(function(response) {
                 var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
@@ -60,11 +48,11 @@
             });
         };
 
-        vm.procedenciasDenuncias = [];
-        var carregarProcedenciasDenuncias = function() {
-            ocorrenciasAPI.getProcedenciasDenuncias()
+        vm.medidasAplicadas = [];
+        var carregarMedidasAplicadas = function() {
+            atendimentosAPI.getMedidasAplicadas()
             .then(function(response) {
-                vm.procedenciasDenuncias = response.data;
+                vm.medidasAplicadas = response.data;
             })
             .catch(function(response) {
                 var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
@@ -72,11 +60,11 @@
             });
         };
 
-        vm.agentesVioladores = [];
-        var carregarAgentesVioladores = function() {
-            ocorrenciasAPI.getAgentesVioladores()
+        vm.direitosViolados = [];
+        var carregarDireitosViolados = function() {
+            atendimentosAPI.getDireitosViolados()
             .then(function(response) {
-                vm.agentesVioladores = response.data;
+                vm.direitosViolados = response.data;
             })
             .catch(function(response) {
                 var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
@@ -84,16 +72,16 @@
             });
         };
 
-        vm.adicionarOcorrencia = function(ocorrencia) {
-            var novaOcorrencia = angular.copy(ocorrencia);
+        vm.adicionarAtendimento = function(atendimento) {
+            var novoAtendimento = angular.copy(atendimento);
             var dhRegistro = new Date();
-            novaOcorrencia.dhRegistro = convertData(dhRegistro.getTime());
-            ocorrenciasAPI.saveOcorrencia(novaOcorrencia)
+            novoAtendimento.dhRegistro = convertData(dhRegistro.getTime());
+            atendimentosAPI.saveAtendimento(novoAtendimento)
             .then(function(response) {
-                delete vm.ocorrencia;
+                delete vm.atendimento;
                 delete vm.dhRegistro;
-                vm.ocorrenciaForm.$setPristine();
-                carregarOcorrencias();
+                vm.atendimentoForm.$setPristine();
+                carregarAtendimentos();
             })
             .catch(function(response) {
                 var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
@@ -101,23 +89,22 @@
             });
         };
     
-        vm.removerOcorrencia = function(ocorrenciaParaRemover) {
+        vm.removerAtendimento = function(atendimentoParaRemover) {
             if(!confirm('Deseja realmente excluir?')) { 
                 return; 
             };
-            ocorrenciasAPI.removeOcorrencia(ocorrenciaParaRemover)
+            atendimentosAPI.removeAtendimento(atendimentoParaRemover)
             .then(function(response) {
-                carregarOcorrencias();
+                carregarAtendimentos();
             })
             .catch(function(response) {
                 var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
                 vm.mensagemDeErro = !!response.data.error ? response.data.error : mensagem;
             });
         };
-        vm.editarOcorrencia = function(ocorrenciaParaEditar) {
-            vm.ocorrencia = angular.copy(ocorrenciaParaEditar);
-            vm.dhRegistro = $filter('date')(ocorrenciaParaEditar.dhRegistro, "dd/MM/yyyy HH:mm");
-            vm.ocorrencia.dhOcorrencia = convertData(ocorrenciaParaEditar.dhOcorrencia);
+        vm.editarAtendimento = function(atendimentoParaEditar) {
+            vm.atendimento = angular.copy(atendimentoParaEditar);
+            vm.dhRegistro = $filter('date')(atendimentoParaEditar.dhRegistro, "dd/MM/yyyy HH:mm");
         };
         var convertData = function(dataLong) {
             if (!dataLong) {
@@ -131,11 +118,11 @@
         };
 
         vm.now = $filter('date')(new Date, "dd/MM/yyyy HH:mm");
-        carregarConselheiras();
-        carregarCriancas();
+        carregarAtendimentos();
         carregarOcorrencias();
-        carregarAgentesVioladores();
-        carregarProcedenciasDenuncias();
+        carregarConselheiras();
+        carregarMedidasAplicadas();
+        carregarDireitosViolados();
 
     };
 })();

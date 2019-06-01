@@ -29,6 +29,12 @@
     margin-top: 100px;
 }
 
+.bolacha {
+    height: 80px;
+    text-align: center;
+    padding-top: 25px;
+}
+
 .validacao-msg {
     font-size: 12px;
 }

@@ -1,0 +1,158 @@
+<div class="top-view">
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: left">{{tituloApp}}</h3>
+    </div>
+    <form class="form-row">
+        <div class="col">
+            <button ng-click="atendimento = {'dhRegistro' : now, 'possuiAgendamento' : 'N'}" type="button" class="btn btn-info my-8 my-sm-2" data-toggle="modal" data-target="#atendimentoModal">
+                + Atendimento
+            </button>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <input ng-model="criterioDeBusca" class="form-control my-8 my-sm-2" type="text" placeholder="Busca rápida" aria-label="Busca">
+        </div>
+    </form>
+    <br>
+    <div class="alert-danger">{{mensagemDeErro}}</div>
+    <table class="table table-striped table-sm" ng-show="atendimentos.length">
+        <thead>
+            <th><a href="" ng-click="ordenarPor('id')">N° Ocorrência</a></th>
+            <th><a href="" ng-click="ordenarPor('ocorrencia.conselheira.nome')">Conselheira</a> </th>
+            <th><a href="" ng-click="ordenarPor('ocorrencia.crianca.nome')">Criança</a></th>
+            <th><a href="" ng-click="ordenarPor('dhRegistro')">Data/hora</a></th>
+            <th><a href="" ng-click="ordenarPor('possuiAgendamento')">Possui agendamento</a></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="elemento in atendimentos | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                <td title="{{elemento.id}}">{{elemento.id}}</td>
+                <td title="{{elemento.conselheira.nome}}">{{elemento.conselheira.nome}}</td>
+                <td>{{elemento.ocorrencia.crianca.nome}}</td>
+                <td>{{elemento.dhRegistro | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{elemento.possuiAgendamento === 'S' ? 'Sim' : 'Não'}}</td>
+                <td style="text-align: right;">
+                    <a href="" ng-click="editarAtendimento(elemento)"><span style="padding: 3px;" title="Editar atendimento" class="fa fa-pencil" data-toggle="modal" data-target="#atendimentoModal"></span></a>
+                    <a href="" ng-click="removerAtendimento(elemento)"><span style="padding: 3px;" title="Remover atendimento" class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h5 style="text-align: center" ng-show="!atendimentos.length">Não existem atendimentos a serem demonstradas. Clique em '+ Atendimento' para adicionar!</h5>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="atendimentoModal" tabindex="-1" role="dialog" aria-labelledby="atendimentoModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="atendimentoModalLabel">{{!atendimento.id ? 'Novo atendimento' : 'Editando atendimento'}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="atendimentoForm" name="atendimentoForm">
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="ocorrencias">Sala:</label>
+                                <select id="ocorrencias" class="custom-select" ng-model="atendimento.ocorrencia" ng-required="true">
+                                    <option value ="">Selecione a ocorrência</option>
+                                    <option ng-repeat="ocorrencia in ocorrencias | orderBy:'nome'" ng-value="ocorrencia" ng-selected="atendimento.ocorrencia.id === ocorrencia.id">
+                                        {{'[' + ocorrencia.id + ' - ' + (ocorrencia.dhOcorrencia | date:'dd/MM/yyyy HH:mm') + '] Conselheira:' + ocorrencia.conselheira.nome + ', Criança:' + ocorrencia.crianca.nome}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="conselheiras">Conselheira:</label>
+                                <select id="conselheiras" class="custom-select" ng-model="atendimento.conselheira" ng-required="true">
+                                    <option value ="">Selecione a conselheira para o atendimento</option>
+                                    <option ng-repeat="conselheira in conselheiras | orderBy:'nome'" ng-value="conselheira" ng-selected="atendimento.conselheira.id === conselheira.id">
+                                        {{conselheira.nome}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="dhRegistro">Data/Hora atendimento:</label>
+                                <input ng-model="dhRegistro" type="text" name="dhRegistro" id="dhRegistro" ng-disabled="true" class="form-control" ng-show="!!atendimento.id">
+                                <input ng-model="atendimento.dhRegistro" type="text" name="dhRegistro" id="dhRegistro" ng-disabled="true" class="form-control" ng-show="!atendimento.id">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="nome">Relato:</label>
+                                <textarea ng-model="atendimento.relato" class="form-control" ng-minlength="3" ng-maxlength="5000" type="text" name="relato" id="relato" cols="80" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="direitosViolados">Violação do direito:</label>
+                                <select id="direitosViolados" class="custom-select" ng-model="atendimento.violacaoDireito" ng-required="true">
+                                    <option value ="">Selecione o direito violado</option>
+                                    <option ng-repeat="direito in direitosViolados | orderBy:'value'" ng-value="direito.value" ng-selected="atendimento.violacaoDireito.value === direito.value">
+                                        {{direito.descricao}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="medidasAplicadas">Medida aplicada:</label>
+                                <select id="medidasAplicadas" class="custom-select" ng-model="atendimento.medidaAplicada" ng-required="true">
+                                    <option value ="">Selecione a medida aplicada</option>
+                                    <option ng-repeat="medida in medidasAplicadas | orderBy:'value'" ng-value="medida.value" ng-selected="atendimento.medidaAplicada.value === medida.value">
+                                        {{medida.descricao}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row align-items-center">
+                            <div class="form-group col-4" >
+                                <input type="checkbox" name="possuiAgendamento" id="possuiAgendamento" ng-model="atendimento.possuiAgendamento" ng-true-value="'S'" ng-false-value="'N'">
+                                <label class="form-check-label" for="possuiAgendamento">
+                                    Possui agendamento
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div ng-messages="atendimentoForm.conselheira.$error" ng-show="atendimentoForm.conselheira.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a conselheira!
+                        </div>
+                    </div>
+                    <div ng-messages="atendimentoForm.crianca.$error" ng-show="atendimentoForm.crianca.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a criança!
+                        </div>
+                    </div>
+                    <div ng-messages="atendimentoForm.dhRegistro.$error" ng-show="atendimentoForm.dhRegistro.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a data e hora da atendimento!
+                        </div>
+                    </div>
+                    <div ng-messages="atendimentoForm.possuiAgendamento.$error" ng-show="atendimentoForm.possuiAgendamento.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe se possui agendamento!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="adicionarAtendimento(atendimento)" ng-disabled="atendimentoForm.$invalid" data-dismiss="modal">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

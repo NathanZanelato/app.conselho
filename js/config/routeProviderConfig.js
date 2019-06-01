@@ -30,6 +30,10 @@
                 templateUrl: 'views/ocorrencias.html',
                 controller: 'ocorrenciasController'
             })
+            .when('/atendimentos', {
+                templateUrl: 'views/atendimentos.html',
+                controller: 'atendimentosController'
+            })
             .otherwise({redirectTo: "/"});
     }
     
