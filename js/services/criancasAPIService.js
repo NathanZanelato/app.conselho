@@ -11,6 +11,9 @@
         };
     
         var _saveCrianca = function(crianca) {
+            if (!!crianca.cpf) {
+                crianca.cpf = crianca.cpf.replace(/\D/g,'');
+            }
             if (!!crianca.id) {
                 return $http.put(configAPI.resourceCriancas + "/" + crianca.id, crianca);
             }

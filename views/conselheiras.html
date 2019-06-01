@@ -26,7 +26,7 @@
         <tbody>
             <tr ng-repeat="elemento in conselheiras | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
                 <td title="{{elemento.nome}}">{{elemento.nome}}</td>
-                <td>{{elemento.cpf}}</td>
+                <td>{{elemento.cpf | cpf}}</td>
                 <td>{{elemento.dtPosse | date:'dd/MM/yyyy'}}</td>
                 <td>{{elemento.matricula}}</td>
                 <td style="text-align: right;">

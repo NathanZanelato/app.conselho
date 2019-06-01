@@ -27,7 +27,7 @@
         <tbody>
             <tr ng-repeat="elemento in criancas | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
                 <td title="{{elemento.nome}}">{{elemento.nome}}</td>
-                <td>{{elemento.cpf}}</td>
+                <td>{{elemento.cpf | cpf}}</td>
                 <td>{{elemento.dtNascimento | date:'dd/MM/yyyy'}}</td>
                 <td>{{elemento.telefone}}</td>
                 <td>{{elemento.endereco}}</td>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="cpf">CPF: </label>
-                                <input ng-model="crianca.cpf" ng-required="true" ng-minlength="11" ng-maxlength="11" class="form-control" type="text" name="cpf" id="cpf" placeholder="CPF">
+                                <input ng-model="crianca.cpf" ng-required="true" ng-minlength="11" ng-maxlength="15" class="form-control" type="text" name="cpf" id="cpf" placeholder="CPF" cpf-dir>
                             </div>
                         </div>
                         <div class="form-row">
