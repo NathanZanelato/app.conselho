@@ -112,6 +112,23 @@
                 vm.mensagemDeErro = !!response.data.error ? response.data.error : mensagem;
             });
         };
+
+        vm.sugereRelato = function(atendimento) {
+            if (!!atendimento.relato) { 
+                var msg = atendimento.relato.substring(atendimento.relato.indexOf('Agendado atendimento da criança: '), 
+                                                    atendimento.relato.indexOf($filter('date')(atendimento.dhAtendimento, "dd/MM/yyyy") + '.')+11);
+                atendimento.relato = atendimento.relato.replace(msg , '');
+                var msg = atendimento.relato.substring(atendimento.relato.indexOf('Agendado atendimento da criança: '), 
+                                                    atendimento.relato.indexOf('.')+1);
+                atendimento.relato = atendimento.relato.replace(msg , '');
+            }
+            if (atendimento.possuiAgendamento === 'S' && !!atendimento.ocorrencia) {
+                atendimento.relato = (!!atendimento.relato ? atendimento.relato : '')
+                                     + 'Agendado atendimento da criança: ' + atendimento.ocorrencia.crianca.nome 
+                                     + ', no endereço: ' + atendimento.ocorrencia.crianca.endereco
+                                     + (!!atendimento.dhAtendimento ? ', às ' + $filter('date')(atendimento.dhAtendimento, "HH:mm") + ' horas do dia ' + $filter('date')(atendimento.dhAtendimento, "dd/MM/yyyy") + '.' : '.');
+            }
+        }
     
         vm.removerAtendimento = function(atendimentoParaRemover) {
             if(!confirm('Deseja realmente excluir?')) { 
@@ -129,6 +146,7 @@
         vm.editarAtendimento = function(atendimentoParaEditar) {
             vm.atendimento = angular.copy(atendimentoParaEditar);
             vm.dhRegistro = $filter('date')(atendimentoParaEditar.dhRegistro, "dd/MM/yyyy HH:mm");
+            vm.atendimento.dhAtendimento = new Date(atendimentoParaEditar.dhAtendimento);
         };
         vm.detalhar = function(ocorrenciaParaDetalhar) {
             vm.ocorrencia = angular.copy(ocorrenciaParaDetalhar);

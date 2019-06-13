@@ -59,7 +59,7 @@
                         <div class="form-row">
                             <div class="form-group col-12">
                                 <label for="ocorrencias">Ocorrência:</label>
-                                <select id="ocorrencias" class="custom-select" ng-model="atendimento.ocorrencia" ng-required="true">
+                                <select id="ocorrencias" class="custom-select" ng-model="atendimento.ocorrencia" ng-required="true" ng-change="sugereRelato(atendimento)">
                                     <option value ="">Selecione a ocorrência</option>
                                     <option ng-repeat="ocorrencia in ocorrencias | orderBy:'nome'" ng-value="ocorrencia" ng-selected="atendimento.ocorrencia.id === ocorrencia.id">
                                         {{'[' + ocorrencia.id + ' - ' + (ocorrencia.dhOcorrencia | date:'dd/MM/yyyy HH:mm') + '] Conselheira:' + ocorrencia.conselheira.nome + ', Criança:' + ocorrencia.crianca.nome}}
@@ -78,21 +78,6 @@
                                         {{conselheira.nome}}
                                     </option>
                                 </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="dhRegistro">Data/Hora atendimento:</label>
-                                <input ng-model="dhRegistro" type="text" name="dhRegistro" id="dhRegistro" ng-disabled="true" class="form-control" ng-show="!!atendimento.id">
-                                <input ng-model="atendimento.dhRegistro" type="text" name="dhRegistro" id="dhRegistro" ng-disabled="true" class="form-control" ng-show="!atendimento.id">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-12">
-                                <label for="nome">Relato:</label>
-                                <textarea ng-model="atendimento.relato" class="form-control" ng-minlength="3" ng-maxlength="5000" type="text" name="relato" id="relato" cols="80" rows="3"></textarea>
                             </div>
                         </div>
 
@@ -122,13 +107,30 @@
 
                         <div class="form-row align-items-center">
                             <div class="form-group col-4" >
-                                <input type="checkbox" name="possuiAgendamento" id="possuiAgendamento" ng-model="atendimento.possuiAgendamento" ng-true-value="'S'" ng-false-value="'N'">
+                                <input type="checkbox" name="possuiAgendamento" id="possuiAgendamento" ng-model="atendimento.possuiAgendamento" ng-true-value="'S'" ng-false-value="'N'" ng-change="sugereRelato(atendimento)">
                                 <label class="form-check-label" for="possuiAgendamento">
                                     Possui agendamento
                                 </label>
                             </div>
+
+                            <div class="form-group col-md-4" ng-show="!atendimento.possuiAgendamento || atendimento.possuiAgendamento === 'N'">
+                                <label for="dhRegistro">Data/Hora atendimento:</label>
+                                <input ng-model="dhRegistro" type="text" name="dhRegistro" id="dhRegistro" ng-disabled="true" class="form-control" ng-show="!!atendimento.id">
+                                <input ng-model="atendimento.dhRegistro" type="text" name="dhRegistro" id="dhRegistro" ng-disabled="true" class="form-control" ng-show="!atendimento.id">
+                            </div>
+                            <div class="form-group col-md-4" ng-show="!!atendimento.possuiAgendamento && atendimento.possuiAgendamento === 'S'">
+                                <label for="dhAtendimento">Data/hora agendamento:</label>
+                                <input ng-model="atendimento.dhAtendimento" type="datetime-local" name="dhAtendimento" id="dhAtendimento" ng-required="!!atendimento.possuiAgendamento && atendimento.possuiAgendamento === 'S'" class="form-control" ng-change="sugereRelato(atendimento)">
+                            </div>
                         </div>
                     </form>
+
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <label for="nome">Relato:</label>
+                            <textarea ng-model="atendimento.relato" class="form-control" ng-minlength="3" ng-maxlength="5000" type="text" name="relato" id="relato" cols="80" rows="3"></textarea>
+                        </div>
+                    </div>
 
                     <div ng-messages="atendimentoForm.conselheira.$error" ng-show="atendimentoForm.conselheira.$dirty">
                         <div ng-message="required" class="alert alert-danger">
