@@ -11,6 +11,9 @@
         };
     
         var _saveConselheira = function(conselheira) {
+            if (!!conselheira.cpf) {
+                conselheira.cpf = conselheira.cpf.replace(/\D/g,'');
+            }
             if (!!conselheira.id) {
                 return $http.put(configAPI.resourceConselheiras + "/" + conselheira.id, conselheira);
             }
