@@ -1,36 +1,38 @@
 <div class="top-view">
-    <div class="agendamentos">
-        <!-- div class="row">
-            <h4 style="text-align: left">{{tituloApp}}</h4>
-        </div-->
-        <div class="row">
-            <h6 style="text-align: left">Agendamentos para hoje:</h6>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <h6 style="text-align: left">Agendamentos para hoje:</h6>
+            </div>
+            <div class="row justify-content-md-left">
+                <ul class="list-group col-sm-10" ng-repeat="agendamento in atendimentosAgendadosParaHoje | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                    <li class="list-group-item">
+                        <small class="text-muted">Ocorrência:</small><small> {{agendamento.ocorrencia.id}}</small>
+                        <hr style="margin-top: 0%;margin-bottom: 0%;">
+                        <small class="text-muted">Data/hora:</small> <small>{{agendamento.dhAtendimento | date:'dd/MM/yyyy HH:mm'}}</small><br>
+                        <small class="text-muted">Endereço: </small><small>{{agendamento.ocorrencia.crianca.endereco}} </small><br>
+                        <small class="text-muted">Conselheira: </small><small>{{agendamento.conselheira.nome}} </small> <br> 
+                        <small class="text-muted">Criança: </small><small>{{agendamento.ocorrencia.crianca.nome}}</small>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="row justify-content-md-left">
-            <ul class="list-group col-xs-10" ng-repeat="agendamento in atendimentosAgendadosParaHoje | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
-                <li class="list-group-item">
-                    <h6>Ocorrência: {{agendamento.ocorrencia.id}}</h6>
-                    <hr>
-                    Data/hora: {{agendamento.dhAtendimento | date:'dd/MM/yyyy HH:mm'}} <br>
-                    Conselheira: {{agendamento.conselheira.nome}} <br> 
-                    Criança: {{agendamento.ocorrencia.crianca.nome}}
-                </li>
-            </ul>
-        </div>
-        <br>
-        <div class="row">
-            <h6 style="text-align: left">Próximos agendamentos:</h6>
-        </div>
-        <div class="row justify-content-md-left">
-            <ul class="list-group col-xs-10" ng-repeat="agendamento in atendimentosAgendados | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
-                <li class="list-group-item">
-                    Ocorrência: {{agendamento.ocorrencia.id}} 
-                    <hr>
-                    Data/hora: {{agendamento.dhAtendimento | date:'dd/MM/yyyy HH:mm'}} <br>
-                    Conselheira: {{agendamento.conselheira.nome}} <br> 
-                    Criança: {{agendamento.ocorrencia.crianca.nome}}
-                </li>
-            </ul>
+        <div class="col-md-6">
+            <div class="row">
+                <h6 style="text-align: left">Próximos agendamentos:</h6>
+            </div>
+            <div class="row justify-content-md-left">
+                <ul class="list-group col-sm-10" ng-repeat="agendamento in atendimentosAgendados | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                    <li class="list-group-item">
+                        <small class="text-muted">Ocorrência:</small><small> {{agendamento.ocorrencia.id}}</small>
+                        <hr style="margin-top: 0%;margin-bottom: 0%;">
+                        <small class="text-muted">Data/hora:</small> <small>{{agendamento.dhAtendimento | date:'dd/MM/yyyy HH:mm'}}</small><br>
+                        <small class="text-muted">Endereço: </small><small>{{agendamento.ocorrencia.crianca.endereco}} </small><br>
+                        <small class="text-muted">Conselheira: </small><small>{{agendamento.conselheira.nome}} </small> <br> 
+                        <small class="text-muted">Criança: </small><small>{{agendamento.ocorrencia.crianca.nome}}</small>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
