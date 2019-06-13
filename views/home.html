@@ -1,12 +1,49 @@
 <div class="top-view">
-    <div class="row justify-content-md-center" style="margin-top: 150px;">
-        <div class="col-md-6">
-            <a href="#!/conselheiras" class="btn btn-outline-info btn-block btn-lg bolacha">Conselheiras</a>
-            <a href="#!/criancas" class="btn btn-outline-info btn-block btn-lg bolacha">Crianças</a>
+    <div class="agendamentos">
+        <!-- div class="row">
+            <h4 style="text-align: left">{{tituloApp}}</h4>
+        </div-->
+        <div class="row">
+            <h6 style="text-align: left">Agendamentos para hoje:</h6>
         </div>
-        <div class="col-md-6">
-            <a href="#!/ocorrencias" class="btn btn-outline-info btn-block btn-lg bolacha">Ocorrências</a>
-            <a href="#!/atendimentos" class="btn btn-outline-info btn-block btn-lg bolacha">Atendimentos</a>
+        <div class="row justify-content-md-left">
+            <ul class="list-group col-xs-10" ng-repeat="agendamento in atendimentosAgendadosParaHoje | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                <li class="list-group-item">
+                    <h6>Ocorrência: {{agendamento.ocorrencia.id}}</h6>
+                    <hr>
+                    Data/hora: {{agendamento.dhAtendimento | date:'dd/MM/yyyy HH:mm'}} <br>
+                    Conselheira: {{agendamento.conselheira.nome}} <br> 
+                    Criança: {{agendamento.ocorrencia.crianca.nome}}
+                </li>
+            </ul>
+        </div>
+        <br>
+        <div class="row">
+            <h6 style="text-align: left">Próximos agendamentos:</h6>
+        </div>
+        <div class="row justify-content-md-left">
+            <ul class="list-group col-xs-10" ng-repeat="agendamento in atendimentosAgendados | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
+                <li class="list-group-item">
+                    Ocorrência: {{agendamento.ocorrencia.id}} 
+                    <hr>
+                    Data/hora: {{agendamento.dhAtendimento | date:'dd/MM/yyyy HH:mm'}} <br>
+                    Conselheira: {{agendamento.conselheira.nome}} <br> 
+                    Criança: {{agendamento.ocorrencia.crianca.nome}}
+                </li>
+            </ul>
         </div>
     </div>
+
+            
+        <!--
+            <div class="col-md-6">
+                <a href="#!/conselheiras" class="btn btn-outline-info btn-block btn-lg bolacha">Conselheiras</a>
+                <a href="#!/criancas" class="btn btn-outline-info btn-block btn-lg bolacha">Crianças</a>
+            </div>
+            <div class="col-md-6">
+                <a href="#!/ocorrencias" class="btn btn-outline-info btn-block btn-lg bolacha">Ocorrências</a>
+                <a href="#!/atendimentos" class="btn btn-outline-info btn-block btn-lg bolacha">Atendimentos</a>
+            </div>
+        -->
+
 </div>

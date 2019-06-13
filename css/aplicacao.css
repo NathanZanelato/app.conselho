@@ -29,6 +29,11 @@
     margin-top: 100px;
 }
 
+.agendamentos {
+    margin-left: -20%;
+    text-align: left;
+}
+
 .bolacha {
     height: 80px;
     text-align: center;

@@ -9,6 +9,15 @@
         var _getAtendimentos = function() {
             return $http.get(configAPI.resourceAtendimentos);
         };
+
+
+        var _getAgendados = function() {
+            return $http.get(configAPI.resourceAtendimentos + '/agendados');
+        };
+
+        var _getAgendadosParaHoje = function() {
+            return $http.get(configAPI.resourceAtendimentos + '/agendados-para-hoje');
+        };
     
         var _saveAtendimento = function(atendimento) {
             if (!!atendimento.id) {
@@ -32,6 +41,8 @@
 
         return {
             getAtendimentos: _getAtendimentos,
+            getAgendadosParaHoje : _getAgendadosParaHoje,
+            getAgendados : _getAgendados,
             getMedidasAplicadas: _getMedidasAplicadas,
             getDireitosViolados : _getDireitosViolados,
             saveAtendimento: _saveAtendimento,
