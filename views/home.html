@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-                <h6 style="text-align: left">Agendamentos para hoje:</h6>
+                <h6 style="text-align: left">{{!!atendimentosAgendadosParaHoje.length ? 'Agendamentos para hoje:' : 'Nenhum agendamentos para hoje' }} </h6>
             </div>
             <div class="row justify-content-md-left">
                 <ul class="list-group col-sm-10" ng-repeat="agendamento in atendimentosAgendadosParaHoje | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <h6 style="text-align: left">Próximos agendamentos:</h6>
+                <h6 style="text-align: left">{{!!atendimentosAgendados.length ? 'Próximos agendamentos:' : 'Nenhum agendamento encontrado' }}</h6>
             </div>
             <div class="row justify-content-md-left">
                 <ul class="list-group col-sm-10" ng-repeat="agendamento in atendimentosAgendados | filter:criterioDeBusca | orderBy:campoParaOrdenacao:direcaoDaOrdenacao">
@@ -35,8 +35,7 @@
             </div>
         </div>
     </div>
-
-            
+      
         <!--
             <div class="col-md-6">
                 <a href="#!/conselheiras" class="btn btn-outline-info btn-block btn-lg bolacha">Conselheiras</a>
