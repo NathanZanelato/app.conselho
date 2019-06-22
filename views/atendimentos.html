@@ -128,7 +128,7 @@
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label for="nome">Relato:</label>
-                            <textarea ng-model="atendimento.relato" class="form-control" ng-minlength="3" ng-maxlength="5000" type="text" name="relato" id="relato" cols="80" rows="3"></textarea>
+                            <textarea ng-model="atendimento.relato" class="form-control" ng-required="true" ng-minlength="3" ng-maxlength="5000" type="text" name="relato" id="relato" cols="80" rows="3"></textarea>
                         </div>
                     </div>
 
@@ -152,9 +152,20 @@
                             Informe se possui agendamento!
                         </div>
                     </div>
+                    <div ng-messages="atendimentoForm.relato.$error" ng-show="atendimentoForm.relato.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            O relato deve ser informado!
+                        </div>
+                        <div ng-message="minlength" class="alert alert-danger">
+                            O relato deve possuir de 3 a 5000 caracteres!
+                        </div>
+                        <div ng-message="maxlength" class="alert alert-danger">
+                            O relato deve possuir de 3 a 5000 caracteres!
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="adicionarAtendimento(atendimento)" ng-disabled="atendimentoForm.$invalid" data-dismiss="modal">Salvar</button>
+                    <button type="button" class="btn btn-primary" ng-click="adicionarAtendimento(atendimento)" ng-disabled="atendimentoForm.$invalid || !atendimento.relato || atendimento.relato.length < 3" data-dismiss="modal">Salvar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
