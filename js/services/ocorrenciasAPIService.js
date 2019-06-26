@@ -30,12 +30,17 @@
             return $http.get(configAPI.resourceOcorrencias + "/agentesVioladores");
         };
 
+        var _getRelatorioOcorrecias = function(filtro) {
+            return $http.post(configAPI.resourceOcorrencias + "/relatorio_ocorrencias", filtro);
+        };
+
         return {
             getOcorrencias: _getOcorrencias,
             getProcedenciasDenuncias: _getProcedenciasDenuncias,
             getAgentesVioladores : _getAgentesVioladores,
             saveOcorrencia: _saveOcorrencia,
-            removeOcorrencia: _removeOcorrencia
+            removeOcorrencia: _removeOcorrencia,
+            getRelatorioOcorrecias: _getRelatorioOcorrecias
         };
     }
 

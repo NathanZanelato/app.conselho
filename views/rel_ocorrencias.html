@@ -1,0 +1,31 @@
+<div class="top-view">
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: left">{{tituloApp}}</h3>
+    </div>
+    <br>
+    <div class="alert-danger">{{mensagemDeErro}}</div>
+    <form id="relForm" name="relForm" class="form-row">
+        <div class="form-group col-md-3">
+            <label for="dtInicial">Data inicial:</label>
+            <input ng-model="filtro.dtInicial" type="date" name="dtInicial" id="dtInicial" ng-required="true" class="form-control">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="dtFinal">Data final:</label>
+            <input ng-model="filtro.dtFinal" type="date" name="dtFinal" id="dtFinal" ng-required="true" class="form-control">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="sexo">Sexo da criança:</label>
+            <select id="sexo" class="custom-select" ng-model="filtro.sexoDaCrianca" class="form-control">
+                <option value="">Todos</option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+                <option value="O">Outro</option>
+            </select>
+        </div>
+        <hr>
+        <div class="form-group col-md-12">
+            <button type="button" class="btn btn-primary" ng-click="enviar(filtro)" ng-disabled="relForm.$invalid">Enviar</button>
+            <button type="button" class="btn btn-secondary" ng-click="filtro = {}">Limpar filtros</button>
+        </div>
+    </form>
+</div>

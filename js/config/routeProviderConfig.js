@@ -34,6 +34,10 @@
                 templateUrl: 'views/atendimentos.html',
                 controller: 'atendimentosController'
             })
+            .when('/rel-ocorrencias', {
+                templateUrl: 'views/rel_ocorrencias.html',
+                controller: 'relatorioOcorrenciasController'
+            })
             .otherwise({redirectTo: "/"});
     }
     
