@@ -96,6 +96,10 @@
                                     <option value="N">Não</option>
                                 </select>
                             </div>
+                            <div class="form-group col-md-12" ng-show="crianca.deficiente ==='S'">
+                                <label for="deficiente">Descrição da deficiêcia:</label>
+                                <textarea name="descricaoDeficiencia" id="descricaoDeficiencia" ng-model="crianca.descricaoDeficiencia"ng-required="crianca.deficiente ==='S'" ng-minlength="2" ng-maxlength="50" type="text" cols="80" rows="3" class="form-control"></textarea>
+                            </div>
                         </div>
                     </form>
                     <div ng-messages="criancaForm.nome.$error" ng-show="criancaForm.nome.$dirty">
@@ -118,14 +122,19 @@
                             Informe o sexo da criança!
                         </div>
                     </div>
+                    <div ng-messages="criancaForm.telefone.$error" ng-show="criancaForm.telefone.$dirty">
+                        <div ng-message="required" class="alert alert-danger">
+                            Informe a telefone!
+                        </div>
+                    </div>
                     <div ng-messages="criancaForm.deficiente.$error" ng-show="criancaForm.deficiente.$dirty">
                         <div ng-message="required" class="alert alert-danger">
                             Informe se a criança é deficiente!
                         </div>
                     </div>
-                    <div ng-messages="criancaForm.telefone.$error" ng-show="criancaForm.telefone.$dirty">
+                    <div ng-messages="criancaForm.descricaoDeficiencia.$error" ng-show="criancaForm.descricaoDeficiencia.$dirty">
                         <div ng-message="required" class="alert alert-danger">
-                            Informe a telefone!
+                            Informe a deficiência da criança!
                         </div>
                     </div>
                 </div>
