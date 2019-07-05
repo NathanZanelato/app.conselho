@@ -1,1 +1,1 @@
-angular.module("app", ["ngMessages", "ngRoute", "ngStorage"]);
+angular.module("app", ["ngMessages", "ngRoute", "ngStorage", "ngSanitize"]);

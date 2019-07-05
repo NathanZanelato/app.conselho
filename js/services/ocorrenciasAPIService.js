@@ -31,7 +31,7 @@
         };
 
         var _getRelatorioOcorrecias = function(filtro) {
-            return $http.post(configAPI.resourceOcorrencias + "/relatorio_ocorrencias", filtro);
+            return $http.post(configAPI.resourceOcorrencias + "/relatorio_ocorrencias", filtro, {responseType: 'arraybuffer'});
         };
 
         return {

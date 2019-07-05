@@ -25,7 +25,8 @@
         <hr>
         <div class="form-group col-md-12">
             <button type="button" class="btn btn-primary" ng-click="enviar(filtro)" ng-disabled="relForm.$invalid">Enviar</button>
-            <button type="button" class="btn btn-secondary" ng-click="filtro = {}">Limpar filtros</button>
+            <button type="button" class="btn btn-secondary" ng-click="resetView()">Limpar filtros</button>
         </div>
     </form>
+    <embed ng-src="{{trustSrc(report)}}" class="col-md-12" height="600" ng-show="!!report"></embed>
 </div>
