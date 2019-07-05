@@ -17,6 +17,7 @@
         vm.report = null;
 
         function enviar(filtro) {
+            delete vm.report;
             var filtro = angular.copy(filtro);
             ocorrenciasAPI.getRelatorioOcorrecias(filtro)
             .then(function(response) {
