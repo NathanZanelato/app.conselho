@@ -4,7 +4,7 @@
 
     angular.module("app").controller("relatorioOcorrenciasController", relatorioOcorrenciasController);
 
-    relatorioOcorrenciasController.$inject = ['$scope', 'ocorrenciasAPI', $sce];
+    relatorioOcorrenciasController.$inject = ['$scope', 'ocorrenciasAPI', '$sce'];
 
     function relatorioOcorrenciasController($scope, ocorrenciasAPI, $sce) {
     
