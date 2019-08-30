@@ -12,7 +12,7 @@
 
         vm.tituloApp = "Listagem de ocorrências";
         vm.ocorrencias = [];
-        vm.hide = true; 
+        vm.hide = true;
         var maxId = 0;
         var carregarOcorrencias = function() {
             ocorrenciasAPI.getOcorrencias()
@@ -87,6 +87,7 @@
 
         vm.historicoOcorrenciasCrianca = [];
         vm.carregaHistoricoOcorrenciasCrianca = function(idCrianca) {
+            vm.hide = true;
             vm.historicoOcorrenciasCrianca = [];
             ocorrenciasAPI.getHistoricoOcorrenciasCrianca(idCrianca)
             .then(function(response) {
