@@ -12,6 +12,7 @@
 
         vm.tituloApp = "Listagem de ocorrências";
         vm.ocorrencias = [];
+        vm.hide = true; 
         var maxId = 0;
         var carregarOcorrencias = function() {
             ocorrenciasAPI.getOcorrencias()
@@ -83,6 +84,19 @@
                 vm.mensagemDeErro = !!response.data.error ? response.data.error : mensagem;
             });
         };
+
+        vm.historicoOcorrenciasCrianca = [];
+        vm.carregaHistoricoOcorrenciasCrianca = function(idCrianca) {
+            vm.historicoOcorrenciasCrianca = [];
+            ocorrenciasAPI.getHistoricoOcorrenciasCrianca(idCrianca)
+            .then(function(response) {
+                vm.historicoOcorrenciasCrianca = response.data;
+            })
+            .catch(function(response) {
+                var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
+                vm.mensagemDeErro = !!response.data.error ? response.data.error : mensagem;
+            });
+        }
 
         vm.adicionarOcorrencia = function(ocorrencia) {
             var novaOcorrencia = angular.copy(ocorrencia);

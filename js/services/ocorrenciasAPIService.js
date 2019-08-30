@@ -9,6 +9,11 @@
         var _getOcorrencias = function() {
             return $http.get(configAPI.resourceOcorrencias);
         };
+
+        var _HistoricoOcorrenciasCrianca = function(idCrianca) {
+            if (!idCrianca) { return [];}
+            return $http.get(configAPI.resourceOcorrencias + "/crianca/" + idCrianca);
+        };
     
         var _saveOcorrencia = function(ocorrencia) {
             if (!!ocorrencia.id) {
@@ -38,6 +43,7 @@
             getOcorrencias: _getOcorrencias,
             getProcedenciasDenuncias: _getProcedenciasDenuncias,
             getAgentesVioladores : _getAgentesVioladores,
+            getHistoricoOcorrenciasCrianca : _HistoricoOcorrenciasCrianca,
             saveOcorrencia: _saveOcorrencia,
             removeOcorrencia: _removeOcorrencia,
             getRelatorioOcorrecias: _getRelatorioOcorrecias
