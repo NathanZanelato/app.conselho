@@ -89,18 +89,36 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="form-group col-12" style="text-align: center; margin-top: -10px; margin-bottom: -10px;">
-                                <div ng-show="!!ocorrencia.crianca && !!ocorrencia.crianca.id">
-                                    <span ng-show="historicoOcorrenciasCrianca.length === 0" >Primeira ocorrência de {{ocorrencia.crianca.nome}}</span>
-                                    <span class="col-12" animate-hide="hide">{{historicoOcorrenciasCrianca.length}} ocorrências</span>
-                                    <span ng-show="historicoOcorrenciasCrianca.length > 0">
-                                        <button class="btn btn-link btn-sm" ng-click="hide = !hide">{{hide ? ('Mostrar histórico de ' + ocorrencia.crianca.nome) : ('Ocultar histórico de ' + ocorrencia.crianca.nome) }} </button>
-                                    </span>
+                            <div class="form-group col-12" style="margin-top: -10px; margin-bottom: -10px; font-size: small;">
+                                <div ng-show="!ocorrencia.id && !!ocorrencia.crianca && !!ocorrencia.crianca.id">
+                                    <div ng-show="historicoOcorrenciasCrianca.length === 0" style="font-size: small; color: blue">Primeira ocorrência de {{ocorrencia.crianca.nome}}</div>
+                                    <div animate-hide="hide" style="margin-bottom: 12px;">
+                                        <table class="table table-bordered table-sm">
+                                            <thead>
+                                                <tr style="text-align: left;">
+                                                    <th scope="col" style="width: 16%;">Data/Hora</th>
+                                                    <th scope="col">Agente violador</th>
+                                                    <th scope="col">Descrição</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="elemento in historicoOcorrenciasCrianca.slice(0, 3)" style="text-align: left;">
+                                                    <td>{{elemento.dhOcorrencia | date:'dd/MM/yyyy HH:mm'}}</td>
+                                                    <td>{{elemento.descricaoAgenteViolador}}</td>
+                                                    <td>{{!!elemento.descricao && elemento.descricao.length > 55 ? elemento.descricao.substring(0, 55) + '...' : elemento.descricao}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div ng-show="historicoOcorrenciasCrianca.length > 0" style="font-size: small;">
+                                        <button class="btn btn-link btn-sm" ng-click="hide = !hide">{{hide ? ('Mostrar histórico de ' + ocorrencia.crianca.nome) : ('Ocultar histórico de ' + ocorrencia.crianca.nome) }}</button>
+                                        <span style="font-size: x-small;">{{historicoOcorrenciasCrianca.length === 1 ? '(1 ocorrência)' : historicoOcorrenciasCrianca.length <= 3 ? '(' + historicoOcorrenciasCrianca.length + ' ocorrências)' : '(3 de ' + historicoOcorrenciasCrianca.length + ' ocorrências)'}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <hr>
+                        <div class="col-12"><hr></div>
 
                         <div class="form-row">
                             <div class="form-group col-md-4">

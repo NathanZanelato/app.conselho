@@ -92,6 +92,14 @@
             ocorrenciasAPI.getHistoricoOcorrenciasCrianca(idCrianca)
             .then(function(response) {
                 vm.historicoOcorrenciasCrianca = response.data;
+                vm.historicoOcorrenciasCrianca.forEach(hoc => {
+                    vm.agentesVioladores.forEach(av => {
+                        if (av.value === hoc.agenteViolador) {
+                            hoc.descricaoAgenteViolador = av.descricao;
+                            return;
+                        }
+                    });
+                });
             })
             .catch(function(response) {
                 var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
