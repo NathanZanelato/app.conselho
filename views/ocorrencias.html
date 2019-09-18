@@ -109,7 +109,10 @@
                                                 <tr ng-repeat="elemento in historicoOcorrenciasCrianca.slice(0, 3)" style="text-align: left;">
                                                     <td>{{elemento.dhOcorrencia | date:'dd/MM/yyyy HH:mm'}}</td>
                                                     <td>{{elemento.descricaoAgenteViolador}}</td>
-                                                    <td>{{!!elemento.descricao && elemento.descricao.length > 55 ? elemento.descricao.substring(0, 55) + '...' : elemento.descricao}}</td>
+                                                    <td>{{!!elemento.descricao && elemento.descricao.length > 45 ? elemento.descricao.substring(0, 45) + '...' : elemento.descricao}}</td>
+                                                    <td style="text-align: right;">
+                                                        <a href="" ng-click="$('#ocorrenciaModal').modal('hide');editarOcorrencia(elemento);$('#ocorrenciaModal').modal('show');"><span style="padding: 3px;" title="Ver ocorrência" class="fa fa-search"></span></a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
