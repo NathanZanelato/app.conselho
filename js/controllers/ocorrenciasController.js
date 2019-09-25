@@ -99,6 +99,12 @@
                             return;
                         }
                     });
+                    vm.procedenciasDenuncias.forEach(pd => {
+                        if (pd.value === hoc.agenteViolador) {
+                            hoc.descricaoProcedenciaDenuncia = pd.descricao;
+                            return;
+                        }
+                    });
                 });
             })
             .catch(function(response) {
@@ -141,6 +147,17 @@
             vm.ocorrencia = angular.copy(ocorrenciaParaEditar);
             vm.dhRegistro = $filter('date')(ocorrenciaParaEditar.dhRegistro, "dd/MM/yyyy HH:mm");
             vm.ocorrencia.dhOcorrencia = convertData(ocorrenciaParaEditar.dhOcorrencia);
+        };
+        vm.exibirHistoricoOcorrencia = function(ocorrenciaParaExibir) {
+            vm.historico = angular.copy(ocorrenciaParaExibir);
+            vm.dhRegistro = $filter('date')(ocorrenciaParaExibir.dhRegistro, "dd/MM/yyyy HH:mm");
+            vm.historico.dhOcorrencia = convertData(ocorrenciaParaExibir.dhOcorrencia);
+        };
+        vm.voltarFoco = function() {
+            $('#ocorrenciaHistoricoModal').modal('hide');
+            $('#ocorrenciaModal').modal('show');
+            $('#ocorrenciaModal').focus();
+            $('body').addClass('modal-open');
         };
         var convertData = function(dataLong) {
             if (!dataLong) {

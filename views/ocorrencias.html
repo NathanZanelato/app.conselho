@@ -111,7 +111,7 @@
                                                     <td>{{elemento.descricaoAgenteViolador}}</td>
                                                     <td>{{!!elemento.descricao && elemento.descricao.length > 45 ? elemento.descricao.substring(0, 45) + '...' : elemento.descricao}}</td>
                                                     <td style="text-align: center;">
-                                                        <a href="" ng-click="$('#ocorrenciaModal').modal('hide');editarOcorrencia(elemento);$('#ocorrenciaModal').modal('show');"><span style="padding: 3px;" title="Ver ocorrência" class="fa fa-search"></span></a>
+                                                        <a href="" ng-click="exibirHistoricoOcorrencia(elemento)"><span style="padding: 3px;" title="Editar ocorrência" class="fa fa-search" data-toggle="modal" data-target="#ocorrenciaHistoricoModal"></span></a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -187,6 +187,80 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="adicionarOcorrencia(ocorrencia)" ng-disabled="ocorrenciaForm.$invalid" data-dismiss="modal">Salvar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Historico -->
+    <div class="modal fade" id="ocorrenciaHistoricoModal" tabindex="-1" role="dialog" aria-labelledby="ocorrenciaHistoricoModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ocorrenciaModalLabel">{{'Ocorrência ' + historico.id + ' de ' + historico.crianca.nome}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="voltarFoco()" >
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="ocorrenciaHistoricoForm" name="ocorrenciaHistoricoForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="id">N° registro: </label>
+                                <input ng-show="historico.id" ng-model="historico.id" ng-disabled="true" class="form-control" type="text" name="idHistorico" id="idHistorico" >
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="dhRegistro">Data/Hora registro:</label>
+                                <input ng-model="dhRegistro" type="text" name="dhRegistroText" id="dhRegistroText" ng-disabled="true" class="form-control" ng-show="!!historico.id">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="conselheiras">Conselheira:</label>
+                                <input ng-model="historico.conselheira.nome" type="text" name="conselheiraNome" id="conselheiraNome" class="form-control" ng-disabled="true">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="criancas">Criança:</label>
+                                <input ng-model="historico.crianca.nome" type="text" name="criancaNome" id="criancaNome" class="form-control" ng-disabled="true">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="dhHistoricoOcorrencia">Data/hora ocorrência:</label>
+                                <input ng-model="historico.dhOcorrencia" type="datetime-local" name="dhHistoricoOcorrencia" id="dhHistoricoOcorrencia" ng-disabled="true" class="form-control">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="historicoResponsavel">Nome do Responsável: </label>
+                                <input ng-model="historico.responsavel" type="text" name="historicoResponsavel" id="historicoResponsavel" ng-disabled="true" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="historicoDescricao">Descrição da ocorrência:</label>
+                                <textarea ng-model="historico.descricao" class="form-control" type="text" name="historicoDescricao" id="historicoDescricao" cols="80" rows="3" ng-disabled="true"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="historicoProcedenciasDenuncias">Procedência da denúncia:</label>
+                                <input ng-model="historico.descricaoProcedenciaDenuncia" type="text" name="historicoProcedenciasDenuncias" id="historicoProcedenciasDenuncias" ng-disabled="true" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="historicoAgentesVioladores">Agente violador:</label>
+                                <input ng-model="historico.descricaoAgenteViolador" type="text" name="historicoAgentesVioladores" id="historicoAgentesVioladores" ng-disabled="true" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="voltarFoco()" type="button" class="btn btn-secondary">Fechar</button>
                 </div>
             </div>
         </div>
