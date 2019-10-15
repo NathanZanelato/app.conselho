@@ -34,6 +34,10 @@
                 templateUrl: 'views/atendimentos.html',
                 controller: 'atendimentosController'
             })
+            .when('/indicadores', {
+                templateUrl: 'views/indicadores.html',
+                controller: 'indicadoresController'
+            })
             .when('/rel-ocorrencias', {
                 templateUrl: 'views/rel_ocorrencias.html',
                 controller: 'relatorioOcorrenciasController'

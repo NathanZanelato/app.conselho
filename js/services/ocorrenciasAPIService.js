@@ -39,6 +39,11 @@
             return $http.post(configAPI.resourceOcorrencias + "/relatorio_ocorrencias", filtro, {responseType: 'arraybuffer'});
         };
 
+        var _getIndicadorOcorreciasPorSexo = function(filtro) {
+            if (!filtro) { return [];}
+            return $http.get(configAPI.resourceOcorrencias + "/indicadores/" + filtro);
+        };
+
         return {
             getOcorrencias: _getOcorrencias,
             getProcedenciasDenuncias: _getProcedenciasDenuncias,
@@ -46,7 +51,8 @@
             getHistoricoOcorrenciasCrianca : _HistoricoOcorrenciasCrianca,
             saveOcorrencia: _saveOcorrencia,
             removeOcorrencia: _removeOcorrencia,
-            getRelatorioOcorrecias: _getRelatorioOcorrecias
+            getRelatorioOcorrecias: _getRelatorioOcorrecias,
+            getIndicadorOcorreciasPorSexo: _getIndicadorOcorreciasPorSexo
         };
     }
 
