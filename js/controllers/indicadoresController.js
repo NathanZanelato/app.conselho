@@ -49,14 +49,14 @@
             vm.anos = [anoAtual, --anoAtual, -- anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual];
         }
 
-        vm.carregaOcorrencias = function(){
-            //console.log('mudou: ' + vm.anoSelected);
+        vm.opcoes = [1, 3, 6, 12, 24, 36, 48, 60, 72, 84];
+        vm.qtdMeses = 84;
+
+        vm.carregaIndicadoresPorSexo = function(){
             ocorrenciasAPI.getIndicadorOcorreciasPorSexo(vm.anoSelected)
             .then(function(response) {
-               // console.log(response.data);
                 var mes = 0;
                 response.data.forEach(item => {
-                    //console.log(mes + ')' + item.sexo + " = " + item.quantidade);
                     if (item.sexo === 'F') {
                         vm.data[0][mes] = item.quantidade;
                     } else if (item.sexo === 'M') {
@@ -75,48 +75,27 @@
             });
         }
 
-        /*var chartBySexo1 = new Chart(document.getElementById('chartBySexo1'), {
-            type: 'bar',
-            data: {
-          
-                datasets: [
-                    {
-                        label: 'Sexo feminino',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                        backgroundColor: ['rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)','rgba(255, 99, 132, 0.2)'],
-                        borderColor: ['rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)','rgba(255, 99, 132, 1)'],
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Sexo masculino',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                        backgroundColor: ['rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 0.2)'],
-                        borderColor: ['rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 1)'],
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Outros',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                        backgroundColor: ['rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)','rgba(255, 206, 86, 0.2)'],
-                        borderColor: ['rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)','rgba(255, 206, 86, 1)'],
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });*/
-
+        vm.carregaIndicadoresPorRecorrencias = function(){
+            ocorrenciasAPI.getIndicadorOcorreciasPorRecorrencias(vm.qtdMeses)
+            .then(function(response) {
+                var quantidades = [];
+                var labels = [];
+                response.data.forEach(item => {
+                    quantidades.push(item.qtdCriancas);
+                    labels.push('Criança(s) com ' + item.totalOcorrencias + (item.totalOcorrencias === 1 ? ' ocorrência' : ' ocorrências'));
+                });
+                vm.dataPie = quantidades;
+                vm.labelsPie = labels;
+            })
+            .catch(function(response) {
+                var mensagem = "Deu erro: " + response.status + " - " + response.statusText;
+                vm.mensagemDeErro = !!response.data.error ? response.data.error : mensagem;
+            });
+        }
 
         listarAnos();
-        vm.carregaOcorrencias(vm.anoSelected);
+        vm.carregaIndicadoresPorSexo();
+        vm.carregaIndicadoresPorRecorrencias();
     };
 
 })();

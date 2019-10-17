@@ -34,8 +34,12 @@
                 templateUrl: 'views/atendimentos.html',
                 controller: 'atendimentosController'
             })
-            .when('/indicadores', {
-                templateUrl: 'views/indicadores.html',
+            .when('/indicadores-por-sexo', {
+                templateUrl: 'views/indicadores-por-sexo.html',
+                controller: 'indicadoresController'
+            })
+            .when('/indicadores-por-recorrencia', {
+                templateUrl: 'views/indicadores-por-recorrencia.html',
                 controller: 'indicadoresController'
             })
             .when('/rel-ocorrencias', {

@@ -41,7 +41,12 @@
 
         var _getIndicadorOcorreciasPorSexo = function(filtro) {
             if (!filtro) { return [];}
-            return $http.get(configAPI.resourceOcorrencias + "/indicadores/" + filtro);
+            return $http.get(configAPI.resourceOcorrencias + "/indicadores/sexo/" + filtro);
+        };
+
+        var _getIndicadorOcorreciasPorRecorrencias = function(filtro) {
+            if (!filtro) { return [];}
+            return $http.get(configAPI.resourceOcorrencias + "/indicadores/recorrencia/" + filtro);
         };
 
         return {
@@ -52,7 +57,8 @@
             saveOcorrencia: _saveOcorrencia,
             removeOcorrencia: _removeOcorrencia,
             getRelatorioOcorrecias: _getRelatorioOcorrecias,
-            getIndicadorOcorreciasPorSexo: _getIndicadorOcorreciasPorSexo
+            getIndicadorOcorreciasPorSexo: _getIndicadorOcorreciasPorSexo,
+            getIndicadorOcorreciasPorRecorrencias: _getIndicadorOcorreciasPorRecorrencias
         };
     }
 

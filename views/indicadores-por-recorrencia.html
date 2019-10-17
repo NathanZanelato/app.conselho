@@ -1,0 +1,14 @@
+<div class="top-view">
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: left">{{tituloApp}}</h3>
+    </div>
+    <div class="col-md-10">
+        <div class="form-group">
+            <i>{{ qtdMeses === 1 ? 'Recorrências no último' : 'Recorrências nos últimos' }}</i>
+            <select id="qtdMeses" class="custom-select col-sm-1" ng-options="opcao for opcao in opcoes" ng-model="qtdMeses" ng-change="carregaIndicadoresPorRecorrencias()" style="margin-top: -2px; margin-left: 10px;"></select>
+            <i>&nbsp; {{ (qtdMeses === 1 ? 'mês ' : 'mêses ') +(qtdMeses > 12 ? '('+(qtdMeses/12)+' anos):' : ':') }} </i>
+            <br><br>
+            <canvas id="doughnut" class="chart chart-pie" chart-data="dataPie" chart-labels="labelsPie" chart-series="labelsPie" chart-colours="coloursPie"></canvas>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="top-view">
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+        <h3 style="text-align: left">{{tituloApp}}</h3>
+    </div>
+    <div class="col-md-10">
+        <div class="form-group">
+            <i>Quantidade de ocorrências por sexo no ano de: </i>
+            <select id="ano" class="custom-select col-sm-3" ng-options="ano for ano in anos" ng-model="anoSelected" ng-change="carregaIndicadoresPorSexo()" style="margin-top: -2px; margin-left: 10px;"></select>
+            <br><br>
+            <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series" chart-colours="colours" height="160"></canvas>
+        </div>
+    </div>
+</div>
