@@ -49,8 +49,8 @@
             vm.anos = [anoAtual, --anoAtual, -- anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual, --anoAtual];
         }
 
-        vm.opcoes = [1, 3, 6, 12, 24, 36, 48, 60, 72, 84];
-        vm.qtdMeses = 84;
+        vm.meses = vm.labels;
+        vm.mesSelected = vm.meses[new Date().getMonth()];
 
         vm.carregaIndicadoresPorSexo = function(){
             ocorrenciasAPI.getIndicadorOcorreciasPorSexo(vm.anoSelected)
@@ -76,7 +76,8 @@
         }
 
         vm.carregaIndicadoresPorRecorrencias = function(){
-            ocorrenciasAPI.getIndicadorOcorreciasPorRecorrencias(vm.qtdMeses)
+            var mes = vm.meses.indexOf(vm.mesSelected) > -1 ? vm.meses.indexOf(vm.mesSelected) + 1 : vm.mesSelected;
+            ocorrenciasAPI.getIndicadorOcorreciasPorRecorrenciasMes(vm.anoSelected, mes)
             .then(function(response) {
                 var quantidades = [];
                 var labels = [];

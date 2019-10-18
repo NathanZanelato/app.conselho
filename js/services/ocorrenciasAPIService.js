@@ -49,6 +49,11 @@
             return $http.get(configAPI.resourceOcorrencias + "/indicadores/recorrencia/" + filtro);
         };
 
+        var _getIndicadorOcorreciasPorRecorrenciasMes = function(ano, mes) {
+            if (!ano || !mes) { return [];}
+            return $http.get(configAPI.resourceOcorrencias + "/indicadores/recorrencia/" + ano + "/" + mes);
+        };
+
         return {
             getOcorrencias: _getOcorrencias,
             getProcedenciasDenuncias: _getProcedenciasDenuncias,
@@ -58,7 +63,8 @@
             removeOcorrencia: _removeOcorrencia,
             getRelatorioOcorrecias: _getRelatorioOcorrecias,
             getIndicadorOcorreciasPorSexo: _getIndicadorOcorreciasPorSexo,
-            getIndicadorOcorreciasPorRecorrencias: _getIndicadorOcorreciasPorRecorrencias
+            getIndicadorOcorreciasPorRecorrencias: _getIndicadorOcorreciasPorRecorrencias,
+            getIndicadorOcorreciasPorRecorrenciasMes: _getIndicadorOcorreciasPorRecorrenciasMes
         };
     }
 
